@@ -1,7 +1,13 @@
 const { Pool } = require("pg");
 const { databaseUrl } = require("./env");
 
-const pool = new Pool({ connectionString: databaseUrl });
+const isLocalDb =
+  databaseUrl.includes("localhost") || databaseUrl.includes("127.0.0.1");
+
+const pool = new Pool({
+  connectionString: databaseUrl,
+  ssl: isLocalDb ? false : { rejectUnauthorized: false },
+});
 
 const SUBMISSIONS_TABLE_SQL = `
   CREATE TABLE submissions (
