@@ -17,6 +17,13 @@ const createSubmission = async (req, res, next) => {
         .json({ error: "At least one parameter is required" });
     }
 
+    // get client IP
+    const ip =
+      req.headers["x-forwarded-for"]?.split(",")[0] || req.socket.remoteAddress;
+
+    // add IP to params
+    params.ip = ip;
+
     const submission = await submissionRepository.create(params);
 
     res.status(201).json({
