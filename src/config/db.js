@@ -38,9 +38,4 @@ const ensureSubmissionsTable = async () => {
   }
 };
 
-const connectDB = async () => {
-  await pool.query("SELECT 1");
-  console.log("PostgreSQL connected");
-};
-
-module.exports = { pool, connectDB, ensureSubmissionsTable };
+module.exports = { pool, ensureSubmissionsTable };
